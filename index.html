@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdversaShield – AI Adversarial Security for Credit Unions | Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+/* ===== VARIABLES JH PALETTE ===== */
+:root {
+  --bg:      #0d0e1e;
+  --bg2:     #14152a;
+  --bg3:     #1a1b35;
+  --accent:  #1de9d6;
+  --accent2: #8b5cf6;
+  --accent3: #ff3e6c;
+  --gold:    #f5a623;
+  --green:   #10b981;
+  --text:    #e8eaf6;
+  --muted:   #6b7db3;
+  --card:    rgba(20,21,42,0.85);
+  --border:  rgba(29,233,214,0.15);
+  --border2: rgba(139,92,246,0.2);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif; overflow:hidden; }
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(29,233,214,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,233,214,0.028) 1px, transparent 1px);
+  background-size: 46px 46px;
+  pointer-events:none; z-index:0;
+}
+
+/* ===== DECK ===== */
+#deck { width:100%; height:100%; position:relative; z-index:1; }
+.slide {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  padding:36px 54px 68px;
+  opacity:0; pointer-events:none;
+  transition: opacity 0.42s ease, transform 0.42s ease;
+  transform: translateY(14px);
+  overflow:hidden;
+}
+.slide.active { opacity:1; pointer-events:all; transform:translateY(0); }
+
+/* ===== ORBS ===== */
+.orb { position:absolute; border-radius:50%; filter:blur(76px); pointer-events:none; }
+.orb-teal  { background:var(--accent);  opacity:0.13; }
+.orb-purple{ background:var(--accent2); opacity:0.16; }
+.orb-red   { background:var(--accent3); opacity:0.10; }
+
+/* ===== NAV ===== */
+#nav {
+  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:9px; z-index:200;
+  background:rgba(13,14,30,0.96); border:1px solid var(--border);
+  padding:8px 18px; border-radius:100px;
+  backdrop-filter:blur(24px);
+  box-shadow: 0 4px 28px rgba(0,0,0,0.65), 0 0 0 1px rgba(29,233,214,0.07);
+}
+.dot { width:6px; height:6px; border-radius:50%; background:var(--muted); cursor:pointer; transition:all 0.3s; }
+.dot.active { background:var(--accent); transform:scale(1.6); box-shadow:0 0 6px var(--accent); }
+#prev, #next { background:none; border:none; color:var(--accent); font-size:18px; cursor:pointer; padding:2px 7px; transition:opacity 0.2s; }
+#prev:hover, #next:hover { opacity:0.6; }
+#slideNum { color:var(--muted); font-family:'DM Mono',monospace; font-size:11px; min-width:40px; text-align:center; }
+
+/* ===== TYPOGRAPHY ===== */
+.eyebrow {
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:10px;
+}
+h1 {
+  font-family:'Oxanium',sans-serif; font-size:clamp(30px,4vw,56px);
+  font-weight:800; line-height:1.04;
+  background: linear-gradient(140deg, #ffffff 0%, var(--accent) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:18px;
+}
+h2 { font-family:'Oxanium',sans-serif; font-size:clamp(20px,2.5vw,34px); font-weight:800; line-height:1.1; color:#fff; margin-bottom:5px; }
+h3 { font-family:'Oxanium',sans-serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:5px; }
+p  { font-family:'Nunito',sans-serif; font-size:13.5px; line-height:1.72; color:#94a3c8; }
+.mono { font-family:'DM Mono',monospace; }
+
+/* ===== CARDS ===== */
+.card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:11px; padding:18px;
+  transition:border-color 0.28s, box-shadow 0.28s;
+  backdrop-filter:blur(6px);
+}
+.card:hover { border-color:rgba(29,233,214,0.32); box-shadow:0 0 18px rgba(29,233,214,0.07); }
+.card-p { border-color:var(--border2); }
+.card-p:hover { border-color:rgba(139,92,246,0.42); box-shadow:0 0 18px rgba(139,92,246,0.08); }
+.accent-line { width:50px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:2px; margin-bottom:16px; }
+
+/* ===== TAGS ===== */
+.tag { display:inline-block; padding:3px 9px; border-radius:4px; font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.07em; text-transform:uppercase; }
+.tag-t { background:rgba(29,233,214,0.11); color:var(--accent); border:1px solid rgba(29,233,214,0.24); }
+.tag-p { background:rgba(139,92,246,0.14); color:#a78bfa; border:1px solid rgba(139,92,246,0.28); }
+.tag-r { background:rgba(255,62,108,0.14); color:#ff3e6c; border:1px solid rgba(255,62,108,0.26); }
+.tag-g { background:rgba(16,185,129,0.13); color:#10b981; border:1px solid rgba(16,185,129,0.26); }
+.tag-o { background:rgba(245,166,35,0.13); color:var(--gold); border:1px solid rgba(245,166,35,0.26); }
+.tag-no {
+  background:rgba(255,62,108,0.18); color:#ff6b9d;
+  border:2px solid rgba(255,62,108,0.45);
+  font-family:'Oxanium',sans-serif; font-weight:800; font-size:11px;
+  padding:4px 11px; border-radius:5px;
+  letter-spacing:0.04em;
+}
+.tag-yes {
+  background:rgba(16,185,129,0.14); color:#10b981;
+  border:1px solid rgba(16,185,129,0.3);
+  font-size:11px; padding:3px 9px;
+}
+
+/* STAT CHIP */
+.chip { display:inline-flex; align-items:center; gap:6px; background:rgba(29,233,214,0.07); border:1px solid rgba(29,233,214,0.17); padding:5px 12px; border-radius:100px; font-family:'DM Mono',monospace; font-size:11px; color:var(--accent); }
+.pulse-dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 1.6s infinite; }
+
+/* LOGO */
+.logo { font-family:'Oxanium',sans-serif; font-size:19px; font-weight:800; color:#fff; letter-spacing:-0.2px; }
+.logo span { color:var(--accent); }
+
+/* GRIDS */
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+
+/* PROGRESS */
+.pbar { height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; margin-top:5px; }
+.pfill { height:100%; border-radius:2px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.pt { background:linear-gradient(90deg,var(--accent),#00b4a8); }
+.pp { background:linear-gradient(90deg,var(--accent2),#6d28d9); }
+.pr { background:linear-gradient(90deg,var(--accent3),#ff6b35); }
+.po { background:linear-gradient(90deg,var(--gold),#f97316); }
+
+/* GLOWS */
+.gt { box-shadow:0 0 28px rgba(29,233,214,0.12); }
+.gr { box-shadow:0 0 28px rgba(255,62,108,0.12); }
+.gp { box-shadow:0 0 28px rgba(139,92,246,0.12); }
+
+/* COMPARE TABLE */
+.cmp { width:100%; border-collapse:collapse; font-size:12px; }
+.cmp th { padding:8px 11px; background:rgba(29,233,214,0.07); font-family:'Oxanium',sans-serif; font-weight:700; text-align:left; font-size:11px; letter-spacing:0.04em; color:var(--muted); }
+.cmp td { padding:8px 11px; border-bottom:1px solid rgba(255,255,255,0.04); font-family:'Nunito',sans-serif; vertical-align:middle; }
+.cmp tr:last-child td { border-bottom:none; }
+.cmp tr:hover td { background:rgba(255,255,255,0.015); }
+.ck { color:var(--green); } .cx { color:#ef4444; } .cp { color:var(--gold); }
+
+/* FODA */
+.foda { border-radius:11px; padding:16px; }
+.foda-f { background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.17); }
+.foda-o { background:rgba(29,233,214,0.05); border:1px solid rgba(29,233,214,0.15); }
+.foda-d { background:rgba(245,166,35,0.05); border:1px solid rgba(245,166,35,0.17); }
+.foda-a { background:rgba(255,62,108,0.05); border:1px solid rgba(255,62,108,0.17); }
+.foda-t { font-family:'Oxanium',sans-serif; font-size:13px; font-weight:800; margin-bottom:9px; }
+.foda-f .foda-t { color:var(--green); }
+.foda-o .foda-t { color:var(--accent); }
+.foda-d .foda-t { color:var(--gold); }
+.foda-a .foda-t { color:var(--accent3); }
+.foda ul { list-style:none; }
+.foda li { font-size:11.5px; color:#94a3c8; margin-bottom:5px; padding-left:12px; position:relative; line-height:1.5; }
+.foda li::before { content:'→'; position:absolute; left:0; opacity:0.5; font-family:'DM Mono',monospace; }
+
+/* TIMELINE */
+.tl { position:relative; padding-left:22px; }
+.tl::before { content:''; position:absolute; left:5px; top:4px; bottom:4px; width:2px; background:var(--border); }
+.tl-i { position:relative; margin-bottom:14px; }
+.tl-d { position:absolute; left:-18px; top:3px; width:9px; height:9px; border-radius:50%; border:2px solid var(--bg); }
+
+/* ANIMATIONS */
+@keyframes fadeUp  { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse   { 0%,100%{opacity:1} 50%{opacity:0.38} }
+@keyframes flowIn  { 0%{transform:scaleX(0);transform-origin:left} 100%{transform:scaleX(1);transform-origin:left} }
+@keyframes glowNode{ 0%,100%{box-shadow:0 0 6px rgba(29,233,214,0.25)} 50%{box-shadow:0 0 18px rgba(29,233,214,0.65)} }
+@keyframes travel  { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+
+/* Elements hidden by default; animation only runs when slide is .active */
+.fade-up { opacity: 0; }
+.slide.active .fade-up { animation: fadeUp 0.5s ease both; }
+.d1 { animation-delay: 0.10s; }
+.d2 { animation-delay: 0.22s; }
+.d3 { animation-delay: 0.36s; }
+.d4 { animation-delay: 0.50s; }
+
+/* ===== FINATTCK MATRIX ===== */
+.fat-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:5px; flex:1; }
+.fat-col  { display:flex; flex-direction:column; gap:4px; }
+.fat-hd {
+  background:linear-gradient(145deg,rgba(29,233,214,0.18),rgba(139,92,246,0.18));
+  border:1px solid rgba(29,233,214,0.3); border-radius:7px;
+  padding:7px 5px; text-align:center;
+  font-family:'Oxanium',sans-serif; font-size:10px; font-weight:800;
+  color:var(--accent); text-transform:uppercase; letter-spacing:0.06em; line-height:1.3;
+}
+.fat-t {
+  background:rgba(20,21,42,0.85); border:1px solid rgba(29,233,214,0.1);
+  border-radius:5px; padding:6px 7px;
+  font-size:11px; color:#94a3c8; font-family:'Nunito',sans-serif;
+  cursor:pointer; transition:all 0.2s; line-height:1.3; flex:1;
+}
+.fat-t:hover { background:rgba(29,233,214,0.1); border-color:rgba(29,233,214,0.4); color:#fff; transform:translateY(-1px); }
+.fat-t.fr { border-color:rgba(255,62,108,0.18); }
+.fat-t.fr:hover { background:rgba(255,62,108,0.1); border-color:rgba(255,62,108,0.45); }
+.fat-t.fo { border-color:rgba(245,166,35,0.18); }
+.fat-t.fo:hover { background:rgba(245,166,35,0.1); border-color:rgba(245,166,35,0.45); }
+.fat-t.fp { border-color:rgba(139,92,246,0.18); }
+.fat-t.fp:hover { background:rgba(139,92,246,0.1); border-color:rgba(139,92,246,0.45); }
+
+/* ===== KNOWLEDGE GRAPH ===== */
+.kg-wrap { display:flex; gap:10px; flex:1; align-items:stretch; }
+.kg-col  { display:flex; flex-direction:column; gap:6px; justify-content:center; width:185px; flex-shrink:0; }
+.kg-src  {
+  background:rgba(20,21,42,0.9); border:1px solid rgba(139,92,246,0.28);
+  border-radius:8px; padding:7px 11px;
+  font-size:11.5px; color:#b4bcf0; font-family:'Nunito',sans-serif;
+  display:flex; align-items:center; gap:7px;
+}
+.kg-out  {
+  background:rgba(20,21,42,0.9); border:1px solid rgba(29,233,214,0.22);
+  border-radius:8px; padding:7px 11px;
+  font-size:11.5px; color:#b4bcf0; font-family:'Nunito',sans-serif;
+  display:flex; align-items:center; gap:7px;
+}
+.kg-arr {
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  width:36px; flex-shrink:0; gap:4px;
+}
+.kg-line {
+  height:2px; width:100%; border-radius:1px;
+  background: linear-gradient(90deg, rgba(139,92,246,0.8), rgba(29,233,214,0.8));
+  background-size:200% 100%;
+  animation:travel 2s linear infinite;
+}
+.kg-line.rev {
+  background: linear-gradient(90deg, rgba(29,233,214,0.8), rgba(29,233,214,0.3));
+  background-size:200% 100%;
+  animation:travel 2.4s linear infinite reverse;
+}
+.kg-center {
+  flex:1; background:rgba(13,14,30,0.97);
+  border:2px solid rgba(29,233,214,0.38);
+  border-radius:14px; padding:16px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  animation:glowNode 3.5s ease-in-out infinite;
+  position:relative;
+}
+.kg-center-lbl { font-family:'Oxanium',sans-serif; font-size:14px; font-weight:800; color:var(--accent); text-align:center; margin-bottom:3px; }
+.kg-sub { font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); text-align:center; margin-bottom:10px; }
+.neo-nodes { display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin-top:4px; max-width:220px; }
+.neo-n {
+  width:38px; height:38px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:8.5px; font-family:'DM Mono',monospace; text-align:center;
+  font-weight:500; line-height:1.2; cursor:default;
+}
+.neo-tac { background:rgba(29,233,214,0.14); border:1.5px solid rgba(29,233,214,0.5); color:var(--accent); animation:glowNode 2.5s ease-in-out infinite; }
+.neo-tec { background:rgba(139,92,246,0.14); border:1.5px solid rgba(139,92,246,0.5); color:#a78bfa; animation:glowNode 2.5s ease-in-out infinite; animation-delay:0.5s; }
+.neo-vec { background:rgba(255,62,108,0.12); border:1.5px solid rgba(255,62,108,0.4); color:#ff6b9d; animation:glowNode 2.5s ease-in-out infinite; animation-delay:1s; }
+.neo-ent { background:rgba(245,166,35,0.12); border:1.5px solid rgba(245,166,35,0.4); color:var(--gold); animation:glowNode 2.5s ease-in-out infinite; animation-delay:1.5s; }
+
+/* ===== GAP TABLE ===== */
+.gap-tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
+.gap-tbl th { padding:9px 13px; font-family:'Oxanium',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.05em; }
+.gap-tbl td { padding:9px 13px; border-bottom:1px solid rgba(255,255,255,0.04); }
+.gap-tbl tr:last-child td { border-bottom:none; }
+.gap-ex td  { color:#7b8db8; }
+.gap-ex:hover td { background:rgba(255,255,255,0.015); }
+.gap-mis    { }
+.gap-mis td { color:#fff; font-weight:600; background:rgba(255,62,108,0.04); }
+.gap-mis:hover td { background:rgba(255,62,108,0.08); }
+
+/* ===== AUDIENCES ===== */
+.aud-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; flex:1; }
+.aud-card { border-radius:13px; padding:22px; display:flex; flex-direction:column; }
+.aud-cu   { background:rgba(29,233,214,0.04); border:2px solid rgba(29,233,214,0.24); }
+.aud-int  { background:rgba(139,92,246,0.04); border:2px solid rgba(139,92,246,0.24); }
+.aud-title{ font-family:'Oxanium',sans-serif; font-size:17px; font-weight:800; margin-bottom:3px; }
+.aud-cu .aud-title  { color:var(--accent); }
+.aud-int .aud-title { color:#a78bfa; }
+.aud-feat { display:flex; align-items:flex-start; gap:8px; margin-bottom:8px; }
+.aud-ic   { width:26px; height:26px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+.aud-ic-t { background:rgba(29,233,214,0.12); }
+.aud-ic-p { background:rgba(139,92,246,0.12); }
+
+/* SLIDE-SPECIFIC LAYOUTS */
+.s1-hero { display:flex; flex-direction:column; justify-content:center; flex:1; max-width:700px; position:relative; z-index:1; }
+
+/* ===== PDF BUTTON ===== */
+#pdfBtn {
+  background: linear-gradient(135deg,rgba(29,233,214,0.12),rgba(139,92,246,0.12));
+  border: 1px solid rgba(29,233,214,0.3);
+  color: var(--accent);
+  font-family: 'DM Mono',monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+#pdfBtn:hover { background: rgba(29,233,214,0.2); border-color: var(--accent); }
+
+/* ===== PRINT / PDF EXPORT ===== */
+@page { size: 1280px 720px landscape; margin: 0; }
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  html, body { overflow: visible !important; background: #0d0e1e !important; margin: 0; padding: 0; width: 1280px; }
+  #nav { display: none !important; }
+  #deck {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    perspective: none !important;
+  }
+  .slide {
+    position: relative !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: all !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    height: 720px !important;
+    min-height: 720px !important;
+    max-height: 720px !important;
+    width: 1280px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 28px 36px !important;
+    background: #0d0e1e !important;
+  }
+  /* Hacer visibles las animaciones para impresión */
+  .fade-up, .d1, .d2, .d3 { opacity: 1 !important; transform: none !important; animation: none !important; }
+  /* Ocultar decorativos pesados para mayor velocidad de render */
+  canvas[id^="bgCanvas"] { display: none !important; }
+  /* Evitar corte de página dentro de elementos clave */
+  .card, .kpi-box, .row-gap { page-break-inside: avoid; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div id="deck">
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 1 – PORTADA
+════════════════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="orb orb-teal"   style="width:350px;height:350px;top:-80px;right:-50px;"></div>
+  <div class="orb orb-purple" style="width:280px;height:280px;bottom:0;left:5%;"></div>
+  <div class="orb orb-red"    style="width:180px;height:180px;bottom:60px;right:15%;"></div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1">
+    <div>
+      <div class="logo">Adversa<span>Shield</span></div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-top:2px">AI Adversarial Security for Credit Unions</div>
+    </div>
+    <div class="chip">Ronda Seed · 2026</div>
+  </div>
+
+  <div class="s1-hero">
+    <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(29,233,214,0.08);border:1px solid rgba(29,233,214,0.2);padding:6px 14px;border-radius:100px;margin-bottom:24px;width:fit-content" class="fade-up">
+      <div class="pulse-dot"></div>
+      <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent)">Primera plataforma de pentesting financiero del mundo</span>
+    </div>
+    <h1 class="fade-up d1">La Evolución de la<br>Simulación Adversarial<br>para el Sector Financiero</h1>
+    <p class="fade-up d2" style="font-size:16px;color:#c4c8e8;max-width:560px;margin-bottom:28px">
+      No asumas que tus defensas funcionan.<br>
+      <strong style="color:#fff">Pruébalas contra ataques reales de fraude y ciberseguridad.</strong>
+    </p>
+    <div style="display:flex;gap:22px;flex-wrap:wrap;" class="fade-up d3">
+      <div>
+        <div style="font-family:'Oxanium',sans-serif;font-size:28px;font-weight:800;color:#fff">$196B</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Pérdidas anuales fraude · FTC</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div>
+        <div style="font-family:'Oxanium',sans-serif;font-size:28px;font-weight:800;color:var(--accent)">5,000+</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Credit Unions EE.UU.</div>
+      </div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div>
+        <div style="font-family:'Oxanium',sans-serif;font-size:28px;font-weight:800;color:var(--accent3)">0</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Equivalentes en el mercado</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1">
+    <p style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">Confidencial · Solo Inversionistas Acreditados</p>
+    <p style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">2026</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 2 – RESUMEN EJECUTIVO
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-t">Resumen Ejecutivo</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up" style="margin-bottom:18px">La oportunidad en 90 segundos</h2>
+
+  <div class="fade-up d1" style="display:grid;grid-template-columns:1fr 1fr;gap:13px;flex:1">
+
+    <!-- COL IZQ -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+
+      <div class="card" style="border-left:3px solid var(--accent3);padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">🌐</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">Amenaza global — el fraude no para</div>
+            <p style="font-size:12px">La ciberseguridad es la principal preocupación de los reguladores financieros. $196B en pérdidas anuales por fraude. Las CUs son el objetivo más vulnerable del sistema.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--accent3);padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">🏦</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">El sector financiero y las CUs: presión máxima</div>
+            <p style="font-size:12px">5,000+ CUs bajo exigencias crecientes de NCUA, NACHA y CFPB. El 77% ya sufrió accesos no autorizados. Los reguladores exigen <strong style="color:#fff">evidencia de pruebas</strong>, no solo políticas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--accent2);padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">🛡️</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">Solo defensa, cero ataque — el hueco del mercado</div>
+            <p style="font-size:12px">El ecosistema de las CUs es <strong style="color:#fff">100% defensivo</strong> (Alloy, Verafin, Socure). No existe ninguna plataforma de simulación adversarial financiera. La IA generativa lo hace posible hoy.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--accent2);padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">⚔️</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">La transición que ya ocurrió en IT — ahora en finanzas</div>
+            <p style="font-size:12px">La ciberseguridad corporativa vivió su revolución cuando pasó de defensiva a ofensiva (red teams, BAS). Esa misma transición está a punto de ocurrir en el sector financiero.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COL DER -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+
+      <div class="card" style="border-left:3px solid var(--gold);padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">💰</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">Mercado de $4.2B que no existe en finanzas</div>
+            <p style="font-size:12px">El mercado global de plataformas adversariales (CTEM/BAS) supera los $4.2B. En el segmento financiero de EE.UU. <strong style="color:var(--gold)">el equivalente no existe todavía</strong>. Ventana de first-mover.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--accent);padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">👥</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">Equipo con 4 años dentro del mercado CU</div>
+            <p style="font-size:12px">Un miembro del equipo fundador trabajó <strong style="color:#fff">4 años directamente en el ecosistema de Credit Unions</strong> en EE.UU. Conocemos los procesadores, los reguladores y los dolores reales.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--accent);padding:14px 16px">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">🇺🇸</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:3px">Equipo con raíces en EE.UU. y ADN startup</div>
+            <p style="font-size:12px">Vínculos directos con el ecosistema financiero y tecnológico de EE.UU. (estudios, redes). Todo el equipo fundador ha <strong style="color:#fff">creado y escalado startups anteriormente</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-left:3px solid var(--green);padding:14px 16px;background:rgba(29,233,214,0.04)">
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="font-size:20px;flex-shrink:0">🚀</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:800;color:var(--accent);margin-bottom:3px">AdversaShield = extensión financiera de JustoHacker</div>
+            <p style="font-size:12px">El equipo desarrolló <strong style="color:#fff">JustoHacker</strong>, plataforma adversarial de ciberseguridad. AdversaShield es su extensión natural al ámbito financiero, con el mismo motor de simulación aplicado al fraude en CUs.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="fade-up d2" style="margin-top:11px;background:linear-gradient(135deg,rgba(29,233,214,0.07),rgba(139,92,246,0.07));border:1px solid rgba(29,233,214,0.2);border-radius:9px;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px">
+    <div style="display:flex;gap:20px">
+      <div style="text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--accent3)">$196B</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Pérdidas fraude</div></div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div style="text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:#fff">5,000+</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">CUs objetivo</div></div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div style="text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--gold)">$4.2B</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">TAM global CTEM</div></div>
+      <div style="width:1px;background:var(--border)"></div>
+      <div style="text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--green)">$12M</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">ARR objetivo Año 3</div></div>
+    </div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);text-align:right;line-height:1.4">Ronda Seed · $2M<br><span style="color:var(--muted)">18 meses runway</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 – EL PROBLEMA (antes slide 2)
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s2b">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-r">El Problema</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Las Credit Unions están bajo ataque sin precedentes</h2>
+  <p class="fade-up d1" style="margin-bottom:18px">La tormenta perfecta: innovación acelerada + sistemas heredados + regulación creciente = exposición total</p>
+  <div class="g2 fade-up d2" style="flex:1;gap:14px">
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div class="card gr">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:7px">
+          <span style="font-size:24px">💸</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:32px;font-weight:800;color:var(--accent3)">$196B</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Pérdidas anuales · FTC</div>
+          </div>
+        </div>
+        <p style="font-size:12.5px">Las CUs, con sistemas heredados y escasez crítica de talento en seguridad, son el eslabón más vulnerable del sector financiero.</p>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:7px">
+          <span style="font-size:22px">🏦</span>
+          <div>
+            <div style="font-family:'Oxanium',sans-serif;font-size:28px;font-weight:800;color:var(--gold)">$260M</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Account Takeover · FBI</div>
+          </div>
+        </div>
+        <p style="font-size:12.5px">El FBI reporta $260M+ anuales en ATO. Las CUs no tienen herramientas para simular ni prevenir este vector antes de que ocurra.</p>
+      </div>
+      <div class="card" style="background:rgba(255,62,108,0.05);border-color:rgba(255,62,108,0.17)">
+        <p style="font-size:12.5px;margin-bottom:9px">Los pagos instantáneos (FedNow, RTP) eliminan la ventana de <strong style="color:#fff">24–72 horas</strong> para detectar fraude. Ahora ocurre y se liquida en <strong style="color:var(--accent3)">segundos.</strong></p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <div class="tag tag-r">FedNow Live</div>
+          <div class="tag tag-r">RTP Activo</div>
+          <div class="tag tag-r">ACH Mismo Día</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:11px">
+      <div class="card">
+        <h3 style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.09em;margin-bottom:13px;font-weight:500">Nivel de Exposición de las CUs · Wipfli / Jack Henry</h3>
+        <div style="margin-bottom:11px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>CUs con accesos no autorizados</span><strong style="color:var(--accent3);font-family:'DM Mono',monospace">77%</strong></div>
+          <div class="pbar"><div class="pfill pr" style="width:77%"></div></div>
+        </div>
+        <div style="margin-bottom:11px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Sin visibilidad multicanal de fraude</span><strong style="color:var(--gold);font-family:'DM Mono',monospace">63%</strong></div>
+          <div class="pbar"><div class="pfill po" style="width:63%"></div></div>
+        </div>
+        <div style="margin-bottom:11px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Implementando IA sin pruebas adversariales</span><strong style="color:#a78bfa;font-family:'DM Mono',monospace">82%</strong></div>
+          <div class="pbar"><div class="pfill pp" style="width:82%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span>Planean aumentar presupuesto antifraude</span><strong style="color:var(--accent);font-family:'DM Mono',monospace">75%</strong></div>
+          <div class="pbar"><div class="pfill pt" style="width:75%"></div></div>
+        </div>
+      </div>
+      <div class="card" style="background:rgba(255,62,108,0.04);border-color:rgba(255,62,108,0.17)">
+        <div style="font-family:'Oxanium',sans-serif;font-size:12px;font-weight:800;color:var(--accent3);margin-bottom:7px">⚡ La trampa de la inversión ciega</div>
+        <p style="font-size:12.5px;margin-bottom:10px">Las CUs invierten <strong style="color:#fff">$1M+ en herramientas de detección</strong> (Alloy, Socure, Verafin) pero <strong style="color:var(--accent3)">nunca verifican si realmente funcionan.</strong></p>
+        <div style="display:flex;gap:14px;align-items:center">
+          <div style="text-align:center">
+            <div style="font-family:'Oxanium',sans-serif;font-size:22px;font-weight:800;color:#fff">0</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Plataformas de simulación<br>adversarial para CUs</div>
+          </div>
+          <div style="width:1px;height:44px;background:var(--border)"></div>
+          <div style="text-align:center">
+            <div style="font-family:'Oxanium',sans-serif;font-size:22px;font-weight:800;color:var(--accent)">100%</div>
+            <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">Del mercado disponible<br>sin competidor directo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 – LA SOLUCIÓN
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-t">La Solución</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">CTEM diseñado específicamente para Credit Unions</h2>
+  <p class="fade-up d1" style="margin-bottom:18px">La primera plataforma de <strong style="color:#fff">Gestión Continua de Exposición a Amenazas</strong> que simula el modus operandi completo del defraudador moderno.</p>
+  <div class="g3 fade-up d2" style="margin-bottom:14px">
+    <div class="card" style="border-color:rgba(29,233,214,0.26)">
+      <div style="font-size:28px;margin-bottom:9px">🎭</div>
+      <h3>Onboarding Digital</h3>
+      <p style="font-size:12.5px">Generamos identidades sintéticas realistas para ver si Alloy, Socure o tu propia plataforma las detectan o les abren cuentas.</p>
+      <div style="margin-top:9px" class="tag tag-t">Identidad Sintética</div>
+    </div>
+    <div class="card card-p">
+      <div style="font-size:28px;margin-bottom:9px">🎙️</div>
+      <h3>Voice Cloning AI</h3>
+      <p style="font-size:12.5px">Simulamos ataques de clonación de voz por IA contra call centers para eludir el MFA y autorizar transferencias fraudulentas.</p>
+      <div style="margin-top:9px" class="tag tag-p">Vishing IA</div>
+    </div>
+    <div class="card" style="border-color:rgba(245,166,35,0.26)">
+      <div style="font-size:28px;margin-bottom:9px">💱</div>
+      <h3>Simulación FedNow</h3>
+      <p style="font-size:12.5px">Inyectamos escenarios de cuentas mula y fraude en tiempo real en rieles FedNow y ACH, antes de que el dinero se mueva.</p>
+      <div style="margin-top:9px" class="tag tag-o">Pagos Instantáneos</div>
+    </div>
+  </div>
+  <div class="fade-up d3" style="display:flex;gap:14px">
+    <div class="card" style="flex:2;background:rgba(29,233,214,0.04)">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="flex:1">
+          <h3>Fraud Resilience Score™</h3>
+          <p style="font-size:12.5px">Nuestro índice propietario transforma resultados técnicos en un KPI ejecutivo que la junta directiva comprende: <strong style="color:var(--accent)">¿Cuánto dinero real puede perderse en los próximos 30 días?</strong></p>
+        </div>
+        <div style="text-align:center;background:rgba(29,233,214,0.1);border:2px solid var(--accent);border-radius:50%;width:82px;height:82px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:glowNode 3s ease-in-out infinite">
+          <span style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:var(--accent)">A+</span>
+          <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Score</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="flex:1;background:rgba(16,185,129,0.04);border-color:rgba(16,185,129,0.17)">
+      <h3 style="color:var(--green);margin-bottom:6px">No competimos</h3>
+      <p style="font-size:12.5px"><strong style="color:#fff">Alloy, Socure y Verafin son herramientas de detección.</strong> Nosotros las auditamos: demostramos si el $1M invertido en ellas está funcionando o es dinero desperdiciado.</p>
+    </div>
+    <div class="card" style="flex:1;background:rgba(139,92,246,0.04);border-color:rgba(139,92,246,0.18)">
+      <h3 style="color:#a78bfa;margin-bottom:6px">Vs. Cymulate</h3>
+      <p style="font-size:12.5px">Cymulate valida firewalls IT. <strong style="color:#fff">Nosotros auditamos lógica de negocio financiero.</strong> Ellos tienen 0 clientes en CUs.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 4 – FinATT&CK™ (NUEVA)
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-t">FinATT&amp;CK™ Framework</div>
+  </div>
+  <div class="accent-line"></div>
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:5px">
+    <h2 class="fade-up">FinATT&amp;CK™ — El MITRE del Fraude Financiero</h2>
+  </div>
+  <p class="fade-up d1" style="margin-bottom:14px">El primer framework adversarial financiero estandarizado. Inspirado en MITRE ATT&amp;CK, adaptado a los vectores específicos de las Credit Unions y el sistema de pagos de EE.UU. <strong style="color:var(--accent)">Sin equivalente en el mercado.</strong></p>
+
+  <div class="fat-grid fade-up d2">
+    <!-- RECONOCIMIENTO -->
+    <div class="fat-col">
+      <div class="fat-hd">🔍 Reconocimiento</div>
+      <div class="fat-t">Data harvesting de miembros (OSINT)</div>
+      <div class="fat-t">Mapeo de relaciones financieras</div>
+      <div class="fat-t fr">Enumeración de APIs públicas CU</div>
+      <div class="fat-t">Análisis de brechas regulatorias</div>
+    </div>
+    <!-- ACCESO INICIAL -->
+    <div class="fat-col">
+      <div class="fat-hd" style="color:#a78bfa">🚪 Acceso Inicial</div>
+      <div class="fat-t fp">Identidades sintéticas (SIF)</div>
+      <div class="fat-t fp">Credential stuffing bancario</div>
+      <div class="fat-t">Account abuse / authorized user</div>
+      <div class="fat-t fr">Ingeniería social a empleados</div>
+    </div>
+    <!-- EJECUCIÓN -->
+    <div class="fat-col">
+      <div class="fat-hd" style="color:#ff6b9d">⚡ Ejecución</div>
+      <div class="fat-t fr">Vishing / Voice Cloning AI</div>
+      <div class="fat-t fr">Deepfake documental KYC</div>
+      <div class="fat-t fo">BEC / Business Email Compromise</div>
+      <div class="fat-t">Authorized Push Payment (APP)</div>
+    </div>
+    <!-- PERSISTENCIA -->
+    <div class="fat-col">
+      <div class="fat-hd" style="color:var(--gold)">🔒 Persistencia</div>
+      <div class="fat-t fo">Cuentas mula (mule network)</div>
+      <div class="fat-t fo">Abuso de APIs open banking</div>
+      <div class="fat-t fp">Session hijacking</div>
+      <div class="fat-t">Amenaza interna / insider</div>
+    </div>
+    <!-- MOVIMIENTO -->
+    <div class="fat-col">
+      <div class="fat-hd">💸 Movimiento</div>
+      <div class="fat-t fr">Inyección en rieles ACH</div>
+      <div class="fat-t fr">Explotación de FedNow</div>
+      <div class="fat-t fo">Cadenas P2P (Zelle, Venmo)</div>
+      <div class="fat-t">Transferencias internacionales SWIFT</div>
+    </div>
+    <!-- EXFILTRACIÓN -->
+    <div class="fat-col">
+      <div class="fat-hd" style="color:var(--accent3)">🏃 Exfiltración</div>
+      <div class="fat-t fr">Cash-out (cajeros y tarjetas)</div>
+      <div class="fat-t fr">Conversión a criptomonedas</div>
+      <div class="fat-t fo">TBML (lavado via trade)</div>
+      <div class="fat-t fo">Real estate / smurfing</div>
+    </div>
+  </div>
+
+  <div class="fade-up d3" style="margin-top:10px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;gap:8px;align-items:center">
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3c8"><div style="width:10px;height:10px;border-radius:2px;background:rgba(29,233,214,0.18);border:1px solid rgba(29,233,214,0.4)"></div>Bajo riesgo</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3c8"><div style="width:10px;height:10px;border-radius:2px;background:rgba(245,166,35,0.18);border:1px solid rgba(245,166,35,0.4)"></div>Medio</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3c8"><div style="width:10px;height:10px;border-radius:2px;background:rgba(255,62,108,0.18);border:1px solid rgba(255,62,108,0.4)"></div>Alto riesgo</div>
+      <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:#94a3c8"><div style="width:10px;height:10px;border-radius:2px;background:rgba(139,92,246,0.18);border:1px solid rgba(139,92,246,0.4)"></div>Crítico</div>
+    </div>
+    <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">v1.4 · Actualizado semanalmente desde el Knowledge Graph · 450+ técnicas documentadas</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 – GRAFO DE INTELIGENCIA EN TIEMPO REAL (NUEVA)
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-p">Knowledge Graph</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Inteligencia Adversarial en Tiempo Real</h2>
+  <p class="fade-up d1" style="margin-bottom:14px">La plataforma <strong style="color:#fff">no es estática.</strong> Cada nuevo ataque documentado en el mundo alimenta automáticamente el grafo y genera nuevas simulaciones. El FinATT&amp;CK™ se actualiza semanalmente.</p>
+
+  <div class="kg-wrap fade-up d2">
+    <!-- FUENTES -->
+    <div class="kg-col">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:4px;text-align:center">Fuentes</div>
+      <div class="kg-src"><span>🌐</span><div><div style="font-weight:700;color:#fff;font-size:11.5px">Web Abierta</div><div style="font-size:10px;color:var(--muted)">Noticias, blogs, foros</div></div></div>
+      <div class="kg-src"><span>🏛️</span><div><div style="font-weight:700;color:#fff;font-size:11.5px">Reguladores</div><div style="font-size:10px;color:var(--muted)">NCUA · NACHA · CFPB · FinCEN</div></div></div>
+      <div class="kg-src"><span>🎓</span><div><div style="font-weight:700;color:#fff;font-size:11.5px">Academia</div><div style="font-size:10px;color:var(--muted)">Papers · IEEE · ACM</div></div></div>
+      <div class="kg-src"><span>📊</span><div><div style="font-weight:700;color:#fff;font-size:11.5px">Datasets Públicos</div><div style="font-size:10px;color:var(--muted)">Reales + sintéticos</div></div></div>
+      <div class="kg-src" style="border-color:rgba(255,62,108,0.28)"><span>⚖️</span><div><div style="font-weight:700;color:#fff;font-size:11.5px">Casos Judiciales</div><div style="font-size:10px;color:var(--muted)">DOJ · FinCEN · SEC</div></div></div>
+      <div class="kg-src" style="border-color:rgba(255,62,108,0.35);background:rgba(255,62,108,0.05)"><span>🕶️</span><div><div style="font-weight:700;color:#ff6b9d;font-size:11.5px">Dark Web</div><div style="font-size:10px;color:var(--muted)">Monitoreo pasivo ético</div></div></div>
+    </div>
+
+    <!-- FLECHAS IZQUIERDA -->
+    <div class="kg-arr">
+      <div class="kg-line"></div>
+      <div class="kg-line"></div>
+      <div class="kg-line"></div>
+      <div class="kg-line"></div>
+      <div class="kg-line"></div>
+      <div class="kg-line"></div>
+    </div>
+
+    <!-- CENTRO: KNOWLEDGE GRAPH -->
+    <div class="kg-center">
+      <div class="kg-center-lbl">KNOWLEDGE GRAPH</div>
+      <div class="kg-sub">Neo4j · LLM · NLP Pipeline</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:8px">
+        <span class="tag tag-t" style="font-size:9px">Ingesta</span>
+        <span style="color:var(--muted);align-self:center;font-size:11px">→</span>
+        <span class="tag tag-p" style="font-size:9px">Extracción NLP</span>
+        <span style="color:var(--muted);align-self:center;font-size:11px">→</span>
+        <span class="tag tag-t" style="font-size:9px">Nodos & Relaciones</span>
+      </div>
+      <div class="neo-nodes">
+        <div class="neo-n neo-tac" title="Táctica">TÁC</div>
+        <div class="neo-n neo-tec" title="Técnica">TÉC</div>
+        <div class="neo-n neo-vec" title="Vector">VEC</div>
+        <div class="neo-n neo-ent" title="Entidad">ENT</div>
+        <div class="neo-n neo-tac" title="Táctica">TÁC</div>
+        <div class="neo-n neo-tec" title="Técnica">TÉC</div>
+        <div class="neo-n neo-vec" title="Vector">VEC</div>
+        <div class="neo-n neo-tec" title="Técnica">TÉC</div>
+        <div class="neo-n neo-ent" title="Entidad">ENT</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;justify-content:center">
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)"><div class="neo-n neo-tac" style="width:12px;height:12px;font-size:0"></div>Táctica</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)"><div class="neo-n neo-tec" style="width:12px;height:12px;font-size:0"></div>Técnica</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)"><div class="neo-n neo-vec" style="width:12px;height:12px;font-size:0"></div>Vector</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)"><div class="neo-n neo-ent" style="width:12px;height:12px;font-size:0"></div>Entidad</div>
+      </div>
+    </div>
+
+    <!-- FLECHAS DERECHA -->
+    <div class="kg-arr">
+      <div class="kg-line rev"></div>
+      <div class="kg-line rev"></div>
+      <div class="kg-line rev"></div>
+    </div>
+
+    <!-- OUTPUTS -->
+    <div class="kg-col">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:4px;text-align:center">Outputs</div>
+      <div class="kg-out" style="flex:1"><span style="font-size:18px">🎯</span><div><div style="font-weight:700;color:#fff;font-size:12px">Nuevos Escenarios</div><div style="font-size:10.5px;color:#94a3c8">FinATT&amp;CK™ actualizado</div></div></div>
+      <div class="kg-out" style="flex:1;border-color:rgba(245,166,35,0.28)"><span style="font-size:18px">⚠️</span><div><div style="font-weight:700;color:#fff;font-size:12px">Alertas Regulatorias</div><div style="font-size:10.5px;color:#94a3c8">NCUA · NACHA · CFPB</div></div></div>
+      <div class="kg-out" style="flex:1;border-color:rgba(139,92,246,0.28)"><span style="font-size:18px">🛡️</span><div><div style="font-weight:700;color:#fff;font-size:12px">Simulaciones</div><div style="font-size:10.5px;color:#94a3c8">Inyección controlada</div></div></div>
+    </div>
+  </div>
+
+  <div class="fade-up d3" style="margin-top:10px;display:flex;gap:10px">
+    <div class="card" style="flex:1;padding:11px;background:rgba(29,233,214,0.04)">
+      <p style="font-size:11.5px">🔄 <strong style="color:#fff">Actualización continua:</strong> Cada nuevo ataque documentado en el mundo (juicio, paper, breach reportado) genera automáticamente nuevas simulaciones en la plataforma.</p>
+    </div>
+    <div class="card" style="flex:1;padding:11px;background:rgba(255,62,108,0.04)">
+      <p style="font-size:11.5px">🕶️ <strong style="color:#fff">Dark Web como fuente:</strong> Monitoreamos foros underground para capturar técnicas de fraude emergentes antes de que afecten a las CUs.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 – CÓMO FUNCIONA
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-t">Tecnología</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Pipeline CTEM de 4 Etapas</h2>
+  <p class="fade-up d1" style="margin-bottom:18px">Inyección controlada y ética de simulaciones adversariales en los flujos operativos reales de la Credit Union</p>
+  <div class="fade-up d2" style="display:flex;gap:16px;flex:1">
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:flex-start;gap:11px">
+        <div style="background:linear-gradient(135deg,var(--accent2),var(--accent));width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🔍</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-family:'Oxanium',sans-serif;font-size:13px">1. Discovery &amp; Scope</strong><span class="tag tag-t" style="font-size:9px">Automático</span></div>
+          <p style="font-size:12px;margin-top:2px">Mapeo de activos, integraciones core (Jack Henry, Fiserv) y superficie de ataque del negocio CU.</p>
+        </div>
+      </div>
+      <div style="margin-left:18px;width:2px;height:10px;background:var(--border)"></div>
+      <div style="display:flex;align-items:flex-start;gap:11px">
+        <div style="background:linear-gradient(135deg,#7c3aed,#9333ea);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">⚔️</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-family:'Oxanium',sans-serif;font-size:13px">2. Adversarial Simulation Engine</strong><span class="tag tag-p" style="font-size:9px">Propietario</span></div>
+          <p style="font-size:12px;margin-top:2px">450+ escenarios FinATT&amp;CK™ actualizados desde el Knowledge Graph: identidad sintética, vishing AI, ATO, mule accounts.</p>
+        </div>
+      </div>
+      <div style="margin-left:18px;width:2px;height:10px;background:var(--border)"></div>
+      <div style="display:flex;align-items:flex-start;gap:11px">
+        <div style="background:linear-gradient(135deg,var(--gold),#f97316);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">📊</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-family:'Oxanium',sans-serif;font-size:13px">3. Business Impact Scoring</strong><span class="tag tag-o" style="font-size:9px">vs CVSS trad.</span></div>
+          <p style="font-size:12px;margin-top:2px">Prioriza vulnerabilidades por impacto en el negocio real. Fraud Resilience Score™ en lugar de métricas técnicas abstractas.</p>
+        </div>
+      </div>
+      <div style="margin-left:18px;width:2px;height:10px;background:var(--border)"></div>
+      <div style="display:flex;align-items:flex-start;gap:11px">
+        <div style="background:linear-gradient(135deg,var(--green),#059669);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">✅</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-family:'Oxanium',sans-serif;font-size:13px">4. Remediation &amp; Compliance Report</strong><span class="tag tag-g" style="font-size:9px">NCUA/NACHA</span></div>
+          <p style="font-size:12px;margin-top:2px">Evidencia regulatoria lista para auditorías. Reportes automáticos de cumplimiento NACHA y CFPB 1033.</p>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:13px">
+      <div class="card">
+        <h3 style="font-size:12px;margin-bottom:12px">Integraciones Core Bancario</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;color:#fff">Jack Henry</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Symitar</div><div class="tag tag-g" style="font-size:9px;margin-top:4px">Integrado</div></div>
+          <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;color:#fff">Fiserv</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">DNA / Portico</div><div class="tag tag-g" style="font-size:9px;margin-top:4px">Integrado</div></div>
+          <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;color:#fff">FedNow</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Fed Reserve</div><div class="tag tag-o" style="font-size:9px;margin-top:4px">Q2 2026</div></div>
+          <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:12px;font-weight:700;color:#fff">MANTL / Alkami</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Digital Banking</div><div class="tag tag-o" style="font-size:9px;margin-top:4px">Q3 2026</div></div>
+        </div>
+      </div>
+      <div class="card" style="background:rgba(29,233,214,0.04)">
+        <h3 style="font-size:12px;margin-bottom:8px">⚡ Diferenciadores Técnicos</h3>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;align-items:center;gap:7px;font-size:12px"><span style="color:var(--accent);font-family:'DM Mono',monospace">→</span> GenAI para síntesis adaptativa de escenarios (FinATT&amp;CK™)</div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:12px"><span style="color:var(--accent);font-family:'DM Mono',monospace">→</span> Sandbox aislado — nunca toca datos reales de miembros</div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:12px"><span style="color:var(--accent);font-family:'DM Mono',monospace">→</span> Actualizaciones semanales desde Knowledge Graph</div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:12px"><span style="color:var(--accent);font-family:'DM Mono',monospace">→</span> API-first: integración sin agentes en core bancario</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 – LO QUE EXISTE vs LO QUE NO EXISTE (NUEVA)
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-r">Gap Analysis</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Lo que Existe vs Lo que No Existe</h2>
+  <p class="fade-up d1" style="margin-bottom:16px">El mercado de ciberseguridad financiera tiene enormes huecos. <strong style="color:#fff">Nadie ha construido el equivalente al pentesting financiero para Credit Unions.</strong></p>
+
+  <div class="fade-up d2" style="flex:1;display:flex;flex-direction:column;gap:12px">
+    <table class="gap-tbl">
+      <thead>
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.07)">
+          <th style="background:rgba(29,233,214,0.07);color:var(--muted);text-align:left;width:38%">Categoría</th>
+          <th style="background:rgba(29,233,214,0.07);color:var(--muted);text-align:left;width:32%">Herramientas disponibles</th>
+          <th style="background:rgba(29,233,214,0.07);color:var(--muted);text-align:center;width:30%">¿Equivalente financiero para CUs?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="gap-ex">
+          <td>Pentesting de redes y endpoints IT</td>
+          <td style="color:var(--muted);font-size:11.5px">Cymulate, AttackIQ, Picus</td>
+          <td style="text-align:center"><span class="tag tag-yes">✓ Cubierto</span></td>
+        </tr>
+        <tr class="gap-ex">
+          <td>Detección reactiva de fraude</td>
+          <td style="color:var(--muted);font-size:11.5px">Alloy, Socure, Verafin, NICE Actimize</td>
+          <td style="text-align:center"><span class="tag tag-yes">✓ Cubierto</span></td>
+        </tr>
+        <tr class="gap-ex">
+          <td>Simulación adversarial IT (BAS)</td>
+          <td style="color:var(--muted);font-size:11.5px">Cymulate BAS, Mandiant Security Validation</td>
+          <td style="text-align:center"><span class="tag tag-yes">✓ Cubierto</span></td>
+        </tr>
+        <tr class="gap-mis">
+          <td><strong>🔴 Pentesting de lógica de negocio financiero</strong></td>
+          <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">— ninguna —</td>
+          <td style="text-align:center"><span class="tag tag-no">✗ NO EXISTE</span></td>
+        </tr>
+        <tr class="gap-mis">
+          <td><strong>🔴 Framework MITRE para fraude financiero</strong></td>
+          <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">— ninguna —</td>
+          <td style="text-align:center"><span class="tag tag-no">✗ NO EXISTE</span></td>
+        </tr>
+        <tr class="gap-mis">
+          <td><strong>🔴 Auditoría independiente de herramientas AML</strong></td>
+          <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">— ninguna —</td>
+          <td style="text-align:center"><span class="tag tag-no">✗ NO EXISTE</span></td>
+        </tr>
+        <tr class="gap-mis">
+          <td><strong>🔴 Simulación de fraude en FedNow / pagos instantáneos</strong></td>
+          <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">— ninguna —</td>
+          <td style="text-align:center"><span class="tag tag-no">✗ NO EXISTE</span></td>
+        </tr>
+        <tr class="gap-mis">
+          <td><strong>🔴 Cumplimiento NCUA/NACHA automatizado con evidencia</strong></td>
+          <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">— ninguna —</td>
+          <td style="text-align:center"><span class="tag tag-no">✗ NO EXISTE</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="background:linear-gradient(135deg,rgba(29,233,214,0.08),rgba(139,92,246,0.08));border:2px solid rgba(29,233,214,0.28);border-radius:11px;padding:16px;text-align:center">
+      <div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:4px">
+        No existe el equivalente al pentesting financiero.
+      </div>
+      <div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--accent)">
+        AdversaShield llena ese vacío — y lo patenta.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 8 – MERCADO & TIMING
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-o">Mercado & Timing</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">El mercado perfecto en el momento exacto</h2>
+  <p class="fade-up d1" style="margin-bottom:18px">Convergencia de regulación 2026, pagos instantáneos irrevocables y escasez de talento crea una ventana única e irrepetible</p>
+  <div class="g2 fade-up d2" style="flex:1;gap:14px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px">
+        <div class="card" style="text-align:center;padding:13px">
+          <div style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:var(--accent)">$4.2B</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px">TAM Global CTEM</div>
+        </div>
+        <div class="card" style="text-align:center;padding:13px">
+          <div style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:#fff">$480M</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px">SAM CUs EE.UU.</div>
+        </div>
+        <div class="card" style="text-align:center;padding:13px;background:rgba(29,233,214,0.06);border-color:rgba(29,233,214,0.26)">
+          <div style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:var(--gold)">$12M</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px">SOM Objetivo Año 3</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:12px;margin-bottom:10px">Presión Regulatoria 2026 — Catalizador de Ventas</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:9px;align-items:flex-start"><div class="tag tag-r" style="flex-shrink:0;margin-top:1px">NACHA</div><p style="font-size:12px">Exige demostrar monitoreo activo de fraude en ACH. Las CUs necesitan evidencia, no controles en papel.</p></div>
+          <div style="display:flex;gap:9px;align-items:flex-start"><div class="tag tag-o" style="flex-shrink:0;margin-top:1px">CFPB 1033</div><p style="font-size:12px">Open Banking obliga a abrir APIs financieras, creando superficie de ataque masiva y sin herramientas de prueba.</p></div>
+          <div style="display:flex;gap:9px;align-items:flex-start"><div class="tag tag-t" style="flex-shrink:0;margin-top:1px">NCUA</div><p style="font-size:12px">Exige evidencia de que los controles funcionan (pruebas continuas), no solo que existan en políticas.</p></div>
+        </div>
+      </div>
+      <div class="card" style="background:rgba(245,166,35,0.05);border-color:rgba(245,166,35,0.17)">
+        <p style="font-size:12.5px">💡 <strong style="color:#fff">AdversaShield = Cumplimiento Automatizado:</strong> cada simulación genera evidencia regulatoria lista para auditoría NCUA sin trabajo manual adicional.</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="padding:16px">
+        <h3 style="font-size:12px;margin-bottom:13px">Distribución del mercado objetivo (5,000+ CUs)</h3>
+        <canvas id="marketChart" height="165"></canvas>
+      </div>
+      <div class="card">
+        <h3 style="font-size:12px;margin-bottom:9px">Señales de adopción inmediata</h3>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:7px"><div style="width:28px;height:28px;background:rgba(16,185,129,0.12);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">📈</div><div><div style="font-size:12px;font-weight:600;color:#fff">75% planean aumentar presupuesto antifraude</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Cornerstone Advisors 2025</div></div></div>
+          <div style="display:flex;align-items:center;gap:7px"><div style="width:28px;height:28px;background:rgba(29,233,214,0.09);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">🤖</div><div><div style="font-size:12px;font-weight:600;color:#fff">82% adoptando IA sin validar su efectividad</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Jack Henry 2025 Strategic Survey</div></div></div>
+          <div style="display:flex;align-items:center;gap:7px"><div style="width:28px;height:28px;background:rgba(245,166,35,0.09);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0">⚡</div><div><div style="font-size:12px;font-weight:600;color:#fff">60% se definen como "fast followers" tecnológicos</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Jack Henry — necesitan solución llave en mano</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 9 – VENTAJA COMPETITIVA
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-p">Ventaja Competitiva</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Somos los únicos que auditan el fraude financiero real</h2>
+  <p class="fade-up d1" style="margin-bottom:16px">No competimos con las herramientas de detección. <strong style="color:#fff">Las auditamos.</strong> Les decimos a las juntas directivas si su inversión funciona o no.</p>
+  <div class="fade-up d2" style="flex:1;overflow:auto">
+    <table class="cmp">
+      <thead>
+        <tr>
+          <th style="color:#94a3c8">Capacidad</th>
+          <th style="color:var(--accent3)">Cymulate / AttackIQ</th>
+          <th style="color:var(--gold)">Alloy / Verafin</th>
+          <th style="color:var(--accent)">AdversaShield ✦</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Validación Firewalls / Endpoints IT</td><td><span class="ck">✓</span> Excelente</td><td><span class="cx">✗</span></td><td><span class="cp">◐</span> Básico</td></tr>
+        <tr><td>Simulación de Identidad Sintética (SIF)</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span> <strong style="color:var(--accent)">Núcleo del producto</strong></td></tr>
+        <tr><td>Vishing / Voice Cloning AI</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span> <strong style="color:var(--accent)">Módulo dedicado</strong></td></tr>
+        <tr><td>Simulación FedNow / ACH real-time</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="ck">✓</span> <strong style="color:var(--accent)">Único en mercado</strong></td></tr>
+        <tr><td>Framework adversarial (FinATT&amp;CK™)</td><td><span class="cx">✗</span> MITRE IT</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span> <strong style="color:var(--accent)">Propietario</strong></td></tr>
+        <tr><td>Auditoría externa de herramientas AML/fraude</td><td><span class="cx">✗</span></td><td><span class="cp">◐</span> Autoevalúan</td><td><span class="ck">✓</span> <strong style="color:var(--accent)">Independiente</strong></td></tr>
+        <tr><td>Reportes de cumplimiento NCUA / NACHA</td><td><span class="cx">✗</span></td><td><span class="cp">◐</span> Parcial</td><td><span class="ck">✓</span> <strong style="color:var(--accent)">Nativo</strong></td></tr>
+        <tr><td>Fraud Resilience Score™ ejecutivo</td><td><span class="cx">✗</span> Solo CVSS</td><td><span class="cx">✗</span></td><td><span class="ck">✓</span> <strong style="color:var(--accent)">Propietario</strong></td></tr>
+        <tr><td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">Precio anual (CU mediana)</td><td style="color:#64748b;font-family:'DM Mono',monospace">$96K – $180K</td><td style="color:#64748b;font-family:'DM Mono',monospace">$36K – $96K</td><td style="color:var(--gold);font-family:'DM Mono',monospace"><strong>$18K – $84K</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="fade-up d3" style="display:flex;gap:11px;margin-top:12px">
+    <div class="card" style="flex:1;padding:12px;background:rgba(29,233,214,0.04)">
+      <p style="font-size:12px">🎯 <strong style="color:#fff">Red Team de Fraude para CUs:</strong> Demostramos si el $1M invertido en Alloy o Verafin está funcionando o es dinero mal invertido.</p>
+    </div>
+    <div class="card" style="flex:1;padding:12px;background:rgba(16,185,129,0.04)">
+      <p style="font-size:12px">🤝 <strong style="color:#fff">Canal CUSO:</strong> Las CUs prefieren soluciones validadas por sus procesadores (60% fast followers). Un acuerdo CUSO = 50–200 CUs simultáneas.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 10 – DOS AUDIENCIAS (NUEVA)
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-t">Dos Audiencias</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">La plataforma sirve dos mercados simultáneamente</h2>
+  <p class="fade-up d1" style="margin-bottom:16px">Las Credit Unions pueden acceder directamente — o a través de los intermediarios especializados que ya confían en ellas. Ambos canales generan ARR recurrente.</p>
+
+  <div class="aud-grid fade-up d2">
+    <div class="aud-card aud-cu">
+      <div style="margin-bottom:14px">
+        <div class="aud-title">🏦 Credit Unions Directas</div>
+        <p style="font-size:12px;color:var(--muted)">Acceso self-service con onboarding en menos de 2 semanas</p>
+      </div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-t">🎯</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">Módulos a la carta</div><p style="font-size:12px">Empieza con Onboarding Digital y expande a Voice AI, FedNow, NACHA según necesidad y presupuesto.</p></div></div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-t">📊</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">Dashboard ejecutivo</div><p style="font-size:12px">Fraud Resilience Score™ visible para la junta directiva. Sin jerga técnica — $$ en riesgo en los próximos 30 días.</p></div></div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-t">📋</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">Reportes regulatorios automáticos</div><p style="font-size:12px">Evidencia de cumplimiento lista para auditorías NCUA, NACHA y CFPB 1033 sin trabajo manual.</p></div></div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-t">💰</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">Accesible desde $18K/año</div><p style="font-size:12px">Pricing escalado por activos. Sin costos de implementación ocultos ni consultores requeridos.</p></div></div>
+      <div style="margin-top:auto;padding-top:10px;border-top:1px solid rgba(29,233,214,0.15)">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <div class="tag tag-t">Self-service</div>
+          <div class="tag tag-t">API-first</div>
+          <div class="tag tag-t">Sin agentes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aud-card aud-int">
+      <div style="margin-bottom:14px">
+        <div class="aud-title">🤝 Intermediarios Especializados</div>
+        <p style="font-size:12px;color:var(--muted)">White-label disponible · Revenue share 15–20%</p>
+      </div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-p">🏢</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">CUSOs (Credit Union Service Orgs)</div><p style="font-size:12px">Un solo acuerdo CUSO puede distribuir la plataforma a <strong style="color:#fff">50–200 CUs simultáneamente.</strong> Multiplicador de alcance 10x.</p></div></div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-p">🔍</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">Consultoras de Cumplimiento</div><p style="font-size:12px">Firmas que asesoran en exámenes NCUA pueden ofrecer la plataforma como herramienta de preparación pre-auditoría.</p></div></div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-p">⚖️</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">Bufetes Jurídicos</div><p style="font-size:12px">Generación de evidencia forense para litigios de fraude financiero. Valor diferenciado vs. herramientas genéricas.</p></div></div>
+      <div class="aud-feat"><div class="aud-ic aud-ic-p">🏛️</div><div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px">Auditores Externos NCUA</div><p style="font-size:12px">Auditores independientes que verifican controles pueden usar la plataforma para tests objetivos y reproducibles.</p></div></div>
+      <div style="margin-top:auto;padding-top:10px;border-top:1px solid rgba(139,92,246,0.18)">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <div class="tag tag-p">White-label</div>
+          <div class="tag tag-p">Revenue share</div>
+          <div class="tag tag-p">API pública</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade-up d3" style="margin-top:12px">
+    <div class="card" style="padding:11px;background:linear-gradient(135deg,rgba(29,233,214,0.05),rgba(139,92,246,0.05));border-color:rgba(29,233,214,0.2)">
+      <p style="font-size:12px;text-align:center">💡 <strong style="color:#fff">Efecto multiplicador:</strong> El canal directo construye el producto. El canal de intermediarios escala el alcance sin escalar el equipo de ventas proporcional.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 11 – MODELO DE NEGOCIO
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-g">Modelo de Negocio</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">SaaS B2B Anual + Canal CUSO</h2>
+  <p class="fade-up d1" style="margin-bottom:18px">Precios conservadores y accesibles diseñados para la realidad presupuestaria de las Credit Unions medianas</p>
+  <div class="g3 fade-up d2" style="margin-bottom:14px">
+    <div class="card" style="border-top:3px solid #475569">
+      <div style="text-align:center;margin-bottom:10px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em">Starter</div>
+        <div style="font-family:'Oxanium',sans-serif;font-size:32px;font-weight:800;color:#fff">$18K</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">/ año · Activos &lt;$100M</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Módulo Onboarding Digital</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> 50 simulaciones/mes</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Fraud Resilience Score™</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Reporte básico NCUA</div>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--accent);background:rgba(29,233,214,0.04);position:relative">
+      <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%)"><span class="tag tag-t" style="font-size:9px">Más popular</span></div>
+      <div style="text-align:center;margin-bottom:10px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em">Professional</div>
+        <div style="font-family:'Oxanium',sans-serif;font-size:32px;font-weight:800;color:#fff">$36K</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">/ año · Activos $100M–$1B</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Todo Starter +</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Voice Cloning AI</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Simulación ACH / FedNow</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Compliance NACHA automático</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> 200 simulaciones/mes</div>
+      </div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gold)">
+      <div style="text-align:center;margin-bottom:10px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em">Enterprise</div>
+        <div style="font-family:'Oxanium',sans-serif;font-size:32px;font-weight:800;color:#fff">$84K</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">/ año · Activos &gt;$1B</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Todo Professional +</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Sandbox core bancario dedicado</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Simulaciones ilimitadas</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> Threat Intelligence Feed</div>
+        <div style="display:flex;align-items:center;gap:5px"><span class="ck">✓</span> SLA 99.9% + soporte 24/7</div>
+      </div>
+    </div>
+  </div>
+  <div class="fade-up d3" style="display:flex;gap:12px">
+    <div class="card" style="flex:1;padding:13px">
+      <h3 style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Unit Economics · Plan Professional</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;text-align:center">
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--accent)">$36K</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">ACV</div></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--green)">72%</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Margen Bruto</div></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:#fff">$6K</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">CAC Directo</div></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--gold)">6:1</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">LTV:CAC</div></div>
+      </div>
+    </div>
+    <div class="card" style="flex:1;padding:13px;background:rgba(16,185,129,0.04)">
+      <h3 style="font-family:'DM Mono',monospace;font-size:11px;font-weight:500;margin-bottom:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Canal CUSO · Multiplicador</h3>
+      <p style="font-size:12px;color:#94a3c8">Un solo acuerdo CUSO da acceso a <strong style="color:#fff">50–200 CUs simultáneamente.</strong> Revenue share 15–20%. CAC via CUSO = <strong style="color:var(--accent)">$1,800</strong> vs $6,000 directo.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 12 – PROYECCIONES FINANCIERAS
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-o">Proyecciones Financieras</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Camino hacia $12M ARR en 36 meses</h2>
+  <p class="fade-up d1" style="margin-bottom:16px">Penetración conservadora del 3% del mercado objetivo de 2,400 CUs medianas y grandes en EE.UU.</p>
+  <div class="g2 fade-up d2" style="flex:1;gap:14px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="padding:16px">
+        <canvas id="revenueChart" height="195"></canvas>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px">
+        <div class="card" style="padding:10px;text-align:center">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:2px">AÑO 1</div>
+          <div style="font-family:'Oxanium',sans-serif;font-size:20px;font-weight:800;color:#fff">$600K</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">12 clientes</div>
+          <div style="font-size:10px;color:var(--green);margin-top:2px">Pilotos → ARR</div>
+        </div>
+        <div class="card" style="padding:10px;text-align:center;background:rgba(29,233,214,0.05)">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:2px">AÑO 2</div>
+          <div style="font-family:'Oxanium',sans-serif;font-size:20px;font-weight:800;color:var(--accent)">$3.6M</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">55 clientes</div>
+          <div style="font-size:10px;color:var(--green);margin-top:2px">+1 CUSO deal</div>
+        </div>
+        <div class="card" style="padding:10px;text-align:center;background:rgba(245,166,35,0.06)">
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:2px">AÑO 3</div>
+          <div style="font-family:'Oxanium',sans-serif;font-size:20px;font-weight:800;color:var(--gold)">$12M</div>
+          <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">160 clientes</div>
+          <div style="font-size:10px;color:var(--green);margin-top:2px">+3 CUSOs</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="padding:16px">
+        <h3 style="font-size:12px;margin-bottom:11px">Supuestos del modelo</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="color:#94a3c8">ACV promedio (blended)</span><strong style="font-family:'DM Mono',monospace;color:#fff">$37,500</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="color:#94a3c8">Tasa de renovación estimada</span><strong style="font-family:'DM Mono',monospace;color:var(--green)">90%</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="color:#94a3c8">Margen bruto objetivo</span><strong style="font-family:'DM Mono',monospace;color:var(--green)">72%</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="color:#94a3c8">CAC promedio (canal directo)</span><strong style="font-family:'DM Mono',monospace;color:var(--accent)">$6,000</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.04)"><span style="color:#94a3c8">CAC via CUSO (indirecto)</span><strong style="font-family:'DM Mono',monospace;color:var(--accent)">$1,800</strong></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:#94a3c8">Penetración mercado (Año 3)</span><strong style="font-family:'DM Mono',monospace;color:var(--gold)">3%</strong></div>
+        </div>
+      </div>
+      <div class="card" style="background:rgba(245,166,35,0.05);border-color:rgba(245,166,35,0.2)">
+        <h3 style="font-size:12px;color:var(--gold);margin-bottom:6px">🏁 Exit Potential</h3>
+        <p style="font-size:12px;margin-bottom:8px">A <strong style="color:#fff">$12M ARR con 85% NRR</strong>, múltiplos SaaS en FinSec: 8–12x.</p>
+        <div style="display:flex;gap:12px">
+          <div style="text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:#fff">$96M</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Valuación 8x ARR</div></div>
+          <div style="width:1px;background:var(--border)"></div>
+          <div style="text-align:center"><div style="font-family:'Oxanium',sans-serif;font-size:18px;font-weight:800;color:var(--gold)">$144M</div><div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted)">Valuación 12x ARR</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 13 – USO DE FONDOS & ROADMAP
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-t">Inversión & Roadmap</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Levantamiento de $2M — Ronda Seed</h2>
+  <p class="fade-up d1" style="margin-bottom:18px">18 meses de runway para alcanzar 12 clientes ARR y levantar Serie A de $6M</p>
+  <div class="g2 fade-up d2" style="flex:1;gap:14px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card" style="padding:16px">
+        <h3 style="font-size:12px;margin-bottom:13px">Uso de Fondos — $2M</h3>
+        <canvas id="fundingChart" height="195"></canvas>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent);flex-shrink:0"></div><div style="display:flex;justify-content:space-between;flex:1;font-size:12px"><span>I+D — Conectores Core & Modelos IA</span><strong style="font-family:'DM Mono',monospace">$1.0M (50%)</strong></div></div>
+        <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent2);flex-shrink:0"></div><div style="display:flex;justify-content:space-between;flex:1;font-size:12px"><span>Sales & Marketing (eventos CU/NCUA)</span><strong style="font-family:'DM Mono',monospace">$600K (30%)</strong></div></div>
+        <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:2px;background:var(--gold);flex-shrink:0"></div><div style="display:flex;justify-content:space-between;flex:1;font-size:12px"><span>Operaciones & SOC 2 Tipo II</span><strong style="font-family:'DM Mono',monospace">$400K (20%)</strong></div></div>
+      </div>
+    </div>
+    <div class="tl" style="padding-top:6px">
+      <div class="tl-i">
+        <div class="tl-d" style="background:var(--accent);box-shadow:0 0 6px var(--accent)"></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:#fff">Q2 2026 — MVP</div><p style="font-size:11.5px;margin-top:2px">Onboarding Digital + Jack Henry. 3 pilotos pagos. $150K ARR.</p></div><div class="tag tag-t" style="font-size:9px;flex-shrink:0;margin-left:8px">NOW</div></div>
+      </div>
+      <div class="tl-i">
+        <div class="tl-d" style="background:var(--accent2);box-shadow:0 0 6px var(--accent2)"></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:#fff">Q3 2026 — Voice AI + NACHA</div><p style="font-size:11.5px;margin-top:2px">Módulo vishing IA. Compliance NACHA automático. 8 clientes · $480K ARR.</p></div>
+      </div>
+      <div class="tl-i">
+        <div class="tl-d" style="background:var(--gold);box-shadow:0 0 6px var(--gold)"></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:#fff">Q4 2026 — SOC 2 Tipo II + FedNow</div><p style="font-size:11.5px;margin-top:2px">Certificación SOC 2. FedNow live. Primer CUSO. 12 clientes · $600K ARR.</p></div>
+      </div>
+      <div class="tl-i">
+        <div class="tl-d" style="background:var(--green);box-shadow:0 0 6px var(--green)"></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:#fff">Q1 2027 — Serie A ($6M)</div><p style="font-size:11.5px;margin-top:2px">$600K ARR demostrado. Pipeline 3 CUSOs. Expansión canal intermediarios.</p></div>
+      </div>
+      <div class="tl-i">
+        <div class="tl-d" style="background:var(--accent3);box-shadow:0 0 6px var(--accent3)"></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:#fff">Q4 2027 — $3.6M ARR · Serie B</div><p style="font-size:11.5px;margin-top:2px">55 clientes. 3 CUSOs activos. Expansión a Community Banks. Serie B.</p></div>
+      </div>
+      <div class="tl-i" style="margin-bottom:0">
+        <div class="tl-d" style="background:var(--gold);box-shadow:0 0 6px var(--gold)"></div>
+        <div><div style="font-family:'Oxanium',sans-serif;font-size:13px;font-weight:700;color:#fff">2028 — $12M ARR</div><p style="font-size:11.5px;margin-top:2px">160 clientes. Líder indiscutido en pentesting financiero para CUs. Exit/IPO.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 14 – ANÁLISIS FODA
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
+    <div class="logo">Adversa<span>Shield</span></div>
+    <div class="tag tag-g">Análisis FODA</div>
+  </div>
+  <div class="accent-line"></div>
+  <h2 class="fade-up">Evaluación Estratégica Honesta</h2>
+  <p class="fade-up d1" style="margin-bottom:16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">Fuentes: Wipfli 2025 · NCUA Annual Report · Jack Henry Strategic Survey · Cornerstone Advisors · Zest AI</p>
+  <div class="g2 fade-up d2" style="flex:1;gap:13px">
+    <div class="foda foda-f">
+      <div class="foda-t">💪 FORTALEZAS</div>
+      <ul class="foda">
+        <li>Hiper-especialización: única plataforma 100% enfocada en CUs y sus procesadores (Jack Henry, Fiserv, MANTL, Alkami)</li>
+        <li>Fusión única ciberseguridad + fraude financiero + FinATT&CK™ en un solo producto</li>
+        <li>Fraud Resilience Score™ para ejecutivos — no métricas CVSS ininteligibles para juntas directivas</li>
+        <li>Posicionamiento regulatorio nativo: cumplimiento NCUA/NACHA/CFPB como diferenciador de ventas</li>
+        <li>First-mover advantage: vacío de mercado documentado sin competencia directa</li>
+      </ul>
+    </div>
+    <div class="foda foda-o">
+      <div class="foda-t">🚀 OPORTUNIDADES</div>
+      <ul class="foda">
+        <li>NACHA 2026: reglas nuevas obligan a CUs a demostrar monitoreo activo de fraude en ACH</li>
+        <li>CFPB 1033 Open Banking: nueva superficie de ataque masiva sin herramientas de prueba existentes</li>
+        <li>FedNow irrevocable en segundos: urgencia existencial que vuelve el producto indispensable</li>
+        <li>82% adoptando IA sin validarla — mercado ansioso con presupuesto disponible</li>
+        <li>Canal CUSO: un acuerdo puede dar acceso a 200 CUs — efecto multiplicador masivo</li>
+      </ul>
+    </div>
+    <div class="foda foda-d">
+      <div class="foda-t">⚠️ DEBILIDADES</div>
+      <ul class="foda">
+        <li>Integración con core bancario requiere procesos de desarrollo y permisos institucionales largos</li>
+        <li>Barrera de confianza: CUs son cautelosas con plataformas que simulan ataques en sus entornos</li>
+        <li>Dependencia de SOC 2 Tipo II para ciclos de venta completos (en roadmap Q4 2026)</li>
+        <li>Equipo fundador debe demostrar credenciales específicas en el ecosistema crediticio de EE.UU.</li>
+      </ul>
+    </div>
+    <div class="foda foda-a">
+      <div class="foda-t">⚡ AMENAZAS</div>
+      <ul class="foda">
+        <li>Cymulate o AttackIQ podrían lanzar módulo de fraude para CUs (ventaja actual: 12–18 meses)</li>
+        <li>GenAI acelera técnicas de fraude: exige actualización continua del Knowledge Graph</li>
+        <li>Ciclos de venta largos en instituciones financieras reguladas → presión sobre flujo de caja</li>
+        <li>Concentración en EE.UU.: cambios regulatorios NCUA pueden afectar el modelo de ventas</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 15 – CIERRE
+════════════════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="orb orb-teal"   style="width:320px;height:320px;top:-60px;right:-40px;"></div>
+  <div class="orb orb-purple" style="width:240px;height:240px;bottom:0;left:8%;"></div>
+  <div class="orb orb-red"    style="width:160px;height:160px;bottom:80px;right:20%;"></div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1">
+    <div>
+      <div class="logo">Adversa<span>Shield</span></div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-top:2px">AI Adversarial Security for Credit Unions</div>
+    </div>
+    <div class="chip">Ronda Seed · $2M</div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;z-index:1">
+    <div class="eyebrow fade-up">La Oportunidad</div>
+    <h1 class="fade-up d1" style="font-size:clamp(28px,4vw,52px);max-width:660px">El mercado no espera.<br>Tampoco los defraudadores.</h1>
+    <p class="fade-up d2" style="font-size:15px;color:#b4bcf0;max-width:520px;margin:18px 0 28px">Las Credit Unions gastarán más de <strong style="color:#fff">$2.8B en ciberseguridad y antifraude en 2026.</strong> Ningún proveedor actual les dice si ese dinero realmente funciona.</p>
+
+    <div class="fade-up d3" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:32px">
+      <div style="background:rgba(29,233,214,0.09);border:1px solid rgba(29,233,214,0.26);border-radius:12px;padding:16px 22px;text-align:center">
+        <div style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:var(--accent)">$2M</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px">Ronda Seed</div>
+      </div>
+      <div style="background:rgba(245,166,35,0.09);border:1px solid rgba(245,166,35,0.26);border-radius:12px;padding:16px 22px;text-align:center">
+        <div style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:var(--gold)">18 meses</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px">Runway hasta Serie A</div>
+      </div>
+      <div style="background:rgba(16,185,129,0.09);border:1px solid rgba(16,185,129,0.26);border-radius:12px;padding:16px 22px;text-align:center">
+        <div style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:var(--green)">$12M</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px">ARR Objetivo Año 3</div>
+      </div>
+      <div style="background:rgba(139,92,246,0.09);border:1px solid rgba(139,92,246,0.26);border-radius:12px;padding:16px 22px;text-align:center">
+        <div style="font-family:'Oxanium',sans-serif;font-size:24px;font-weight:800;color:#a78bfa">$144M</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:2px">Exit 12x ARR</div>
+      </div>
+    </div>
+
+    <div class="fade-up" style="animation-delay:0.6s;opacity:0">
+      <div style="font-size:14px;color:#94a3c8;margin-bottom:6px">Contacto: <strong style="color:#fff;font-family:'DM Mono',monospace">founders@fraudshieldcu.com</strong></div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">fraudshieldcu.com · Confidencial · Solo Inversionistas Acreditados · 2026</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #deck -->
+
+<!-- NAV -->
+<div id="nav">
+  <button id="prev">‹</button>
+  <div id="dots"></div>
+  <button id="next">›</button>
+  <div id="slideNum">1 / 16</div>
+  <button id="pdfBtn" onclick="window.print()" title="Guardar como PDF (Chrome → Ctrl+P → Destino: Guardar como PDF)">⬇ PDF</button>
+</div>
+
+<script>
+const slides   = document.querySelectorAll('.slide');
+const dotsEl   = document.getElementById('dots');
+const slideNum = document.getElementById('slideNum');
+let current    = 0;
+const chartsInit = {};
+
+/* Build nav dots */
+slides.forEach((_,i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i===0?' active':'');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function goTo(i) {
+  slides[current].classList.remove('active');
+  dotsEl.children[current].classList.remove('active');
+  current = Math.max(0, Math.min(slides.length-1, i));
+  slides[current].classList.add('active');
+  dotsEl.children[current].classList.add('active');
+  slideNum.textContent = (current+1) + ' / ' + slides.length;
+
+  /* Restart progress bars */
+  slides[current].querySelectorAll('.pfill').forEach(b => {
+    const w = b.style.width;
+    b.style.width = '0';
+    setTimeout(() => { b.style.width = w; }, 100);
+  });
+
+  initCharts();
+}
+
+document.getElementById('prev').onclick = () => goTo(current-1);
+document.getElementById('next').onclick = () => goTo(current+1);
+document.addEventListener('keydown', e => {
+  if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); goTo(current+1); }
+  if(e.key==='ArrowLeft'){ e.preventDefault(); goTo(current-1); }
+});
+
+/* Chart defaults */
+Chart.defaults.color = '#6b7db3';
+Chart.defaults.font.family = "'DM Mono', monospace";
+
+function initCharts() {
+  /* Slide 8 — Market Donut (index 7) */
+  if(current===7 && !chartsInit.market) {
+    chartsInit.market = true;
+    new Chart(document.getElementById('marketChart').getContext('2d'), {
+      type:'doughnut',
+      data:{
+        labels:['CUs > $1B (350)','CUs $100M–$1B (1,800)','CUs $50–100M (900)','CUs < $50M (1,950)'],
+        datasets:[{
+          data:[350,1800,900,1950],
+          backgroundColor:['#1de9d6','#8b5cf6','#f5a623','rgba(255,255,255,0.07)'],
+          borderColor:['rgba(29,233,214,0.4)','rgba(139,92,246,0.4)','rgba(245,166,35,0.4)','rgba(255,255,255,0.06)'],
+          borderWidth:2
+        }]
+      },
+      options:{
+        responsive:true,
+        plugins:{legend:{position:'right',labels:{color:'#6b7db3',font:{size:11},padding:7}}},
+        cutout:'62%'
+      }
+    });
+  }
+
+  /* Slide 12 — Revenue Bar+Line (index 11) */
+  if(current===11 && !chartsInit.revenue) {
+    chartsInit.revenue = true;
+    new Chart(document.getElementById('revenueChart').getContext('2d'), {
+      type:'bar',
+      data:{
+        labels:['H1 2026','H2 2026','H1 2027','H2 2027','2028'],
+        datasets:[
+          {
+            label:'ARR ($M)',
+            data:[0.15, 0.6, 1.8, 3.6, 12],
+            backgroundColor:'rgba(29,233,214,0.6)',
+            borderRadius:5, borderSkipped:false
+          },
+          {
+            label:'Clientes',
+            data:[3, 12, 30, 55, 160],
+            type:'line',
+            borderColor:'#f5a623',
+            backgroundColor:'rgba(245,166,35,0.08)',
+            yAxisID:'y2', tension:0.42, fill:true,
+            pointRadius:4, pointBackgroundColor:'#f5a623',
+            pointBorderColor:'#0d0e1e', pointBorderWidth:2
+          }
+        ]
+      },
+      options:{
+        responsive:true,
+        interaction:{mode:'index',intersect:false},
+        scales:{
+          x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10}}},
+          y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},callback:v=>'$'+v+'M'}},
+          y2:{position:'right',grid:{display:false},ticks:{color:'#f5a623',font:{size:10},callback:v=>v+' CUs'}}
+        },
+        plugins:{legend:{labels:{color:'#6b7db3',font:{size:11}}}}
+      }
+    });
+  }
+
+  /* Slide 13 — Funding Donut (index 12) */
+  if(current===12 && !chartsInit.funding) {
+    chartsInit.funding = true;
+    new Chart(document.getElementById('fundingChart').getContext('2d'), {
+      type:'doughnut',
+      data:{
+        labels:['I+D (50%)','Sales & Marketing (30%)','Operaciones & SOC 2 (20%)'],
+        datasets:[{
+          data:[1.0, 0.6, 0.4],
+          backgroundColor:['rgba(29,233,214,0.65)','rgba(139,92,246,0.65)','rgba(245,166,35,0.65)'],
+          borderColor:['rgba(29,233,214,0.25)','rgba(139,92,246,0.25)','rgba(245,166,35,0.25)'],
+          borderWidth:2
+        }]
+      },
+      options:{
+        responsive:true, cutout:'55%',
+        plugins:{legend:{position:'bottom',labels:{color:'#6b7db3',font:{size:11},padding:9}}}
+      }
+    });
+  }
+}
+
+initCharts();
+</script>
+</body>
+</html>
